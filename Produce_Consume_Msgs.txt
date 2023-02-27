@@ -1,0 +1,77 @@
+Produce and Consume Messages using CLI
+======================================
+
+We can use kafka-console-producer.sh to produce messages in to kafka topic.
+We can use kafka-console-consumer.sh to consume messages from kafka topic.
+
+Delete a topic
+==============
+%%sh
+
+/opt/kafka/bin/kafka-topics.sh --delete \
+--zookeeper m01.itversity.com:2181,m02.itversity.com:2181 \
+--topic `whoami`_retail
+
+Create a topic in a multi node cluster
+======================================
+%%sh
+
+/opt/kafka/bin/kafka-topics.sh --create \
+--zookeeper m01.itversity.com:2181,m02.itversity.com:2181 \
+--replication-factor 2 \
+--partitions 1 \
+--topic `whoami`_demo
+
+List Topic
+==========
+
+%%sh
+
+/opt/kafka/bin/kafka-topics.sh --list \
+--zookeeper m01.itversity.com:2181,m02.itversity.com:2181 \
+--topic `whoami`_demo
+
+Describe Topic
+==============
+
+%%sh
+
+/opt/kafka/bin/kafka-topics.sh --describe \
+--zookeeper m01.itversity.com:2181,m02.itversity.com:2181 \
+--topic `whoami`_demo
+
+Topic: itv005372_demo	PartitionCount: 1	ReplicationFactor: 2	Configs: 
+	Topic: itv005372_demo	Partition: 0	Leader: 3	Replicas: 3,2	Isr: 3,2
+	
+Produce Messgaes
+================
+%%sh
+/opt/kafka/bin/kafka-console-producer.sh \
+--bootstrap-server w01.itversity.com:9092,w02.itversity.com:9092 \
+--topic `whoami`_demo
+
+[itv005372@g01 ~]$ /opt/kafka/bin/kafka-console-producer.sh \
+> --bootstrap-server w01.itversity.com:9092,w02.itversity.com:9092 \
+> --topic `whoami`_demo
+>hello world
+>this is kafka demo
+>we have just created the topic
+>This messgae is yet to be published
+
+Consume messages
+================
+
+%%sh
+/opt/kafka/bin/kafka-console-consumer.sh \
+--bootstrap-server w01.itversity.com:9092,w02.itversity.com:9092 \
+--topic `whoami`_demo \
+--from-beginning
+
+[itv005372@g01 ~]$ /opt/kafka/bin/kafka-console-consumer.sh \
+> --bootstrap-server w01.itversity.com:9092,w02.itversity.com:9092 \
+> --topic `whoami`_demo \
+> --from-beginning
+hello world
+this is kafka demo
+we have just created the topic
+This messgae is yet to be published

@@ -1,0 +1,25 @@
+Produce retail logs to kafka topic
+==================================
+%%sh 
+/opt/kafka/bin/kafka-topics.sh --list \
+--zookeeper m01.itversity.com:2181,m02.itversity.com:2181,m03.itversity.com:2181 \
+--topic `whoami`_retail  
+
+/opt/kafka/bin/kafka-topics.sh --create \
+--zookeeper m01.itversity.com:2181,m02.itversity.com:2181 \
+--replication-factor 2 \
+--partitions 3 \
+--topic `whoami`_retail
+
+/opt/kafka/bin/kafka-topics.sh --describe \
+--zookeeper m01.itversity.com:2181,m02.itversity.com:2181,m03.itversity.com:2181 \
+--topic `whoami`_retail 
+
+Topic: itv005372_retail PartitionCount: 3       ReplicationFactor: 2    Configs: 
+        Topic: itv005372_retail Partition: 0    Leader: 2       Replicas: 2,3   Isr: 2,3
+        Topic: itv005372_retail Partition: 1    Leader: 3       Replicas: 3,1   Isr: 3,1
+        Topic: itv005372_retail Partition: 2    Leader: 1       Replicas: 1,2   Isr: 1,2
+		
+tail_logs.sh|/opt/kafka/bin/kafka-console-producer.sh \
+--bootstrap-server w01.itversity.com:9092, w02.itversity.com:9092 \
+--topic `whoami`_retail

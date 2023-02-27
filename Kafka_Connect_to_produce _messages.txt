@@ -1,0 +1,75 @@
+Kafka Connect to produce messages
+=================================
+
+
+Creating a working folder
+=========================
+
+mkdir -p ~/kafka_connect/retail_logs_produce
+
+cd ~/kafka_connect/retail_logs_produce
+
+Copy the following files from kafak config folder
+=================================================
+
+cp /opt/kafka/config/connect-standalone.properties \
+~/kafka_connect/retail_logs_produce/retail_logs_standalone.properties
+
+cp /opt/kafka/config/connect-file-source.properties \
+~/kafka_connect/retail_logs_produce/retail_logs_file_source.properties
+
+[itv005372@g01 ~]$ cd ~/kafka_connect/retail_logs_produce
+[itv005372@g01 retail_logs_produce]$ cp /opt/kafka/config/connect-standalone.properties \
+> ~/kafka_connect/retail_logs_produce/retail_logs_standalone.properties
+[itv005372@g01 retail_logs_produce]$ cp /opt/kafka/config/connect-file-source.properties \
+> ~/kafka_connect/retail_logs_produce/retail_logs_file_source.properties
+[itv005372@g01 retail_logs_produce]$ ls -ltr
+total 8
+-rwxr-xr-x 1 itv005372 students 2262 Feb 26 18:44 retail_logs_standalone.properties
+-rwxr-xr-x 1 itv005372 students  881 Feb 26 18:44 retail_logs_file_source.properties
+
+Update retail_logs_standalone.properties 
+========================================
+
+Bootstrap servers with more than one brokers on multi node cluster
+key and value converters
+offset file name
+
+#Broker information
+bootstrap.servers=w01.itversity.com:9092,w02.itversity.com:9092
+
+key.converter=org.apache.kafka.connect.storage.StringConverter
+value.converter=org.apache.kafka.connect.storage.StringConverter
+
+key.converter.schemas.enable=true
+value.converter.schemas.enable=true
+
+offset.storage.file.filename=/home/itv005372/kafka_connect/retail_logs_produce/retail.offsets
+offset.flush.interval.ms=10000
+
+What is offset?
+================
+The point upto which the data is read. Offset upto which the data is read.
+
+offset file has to be created.
+
+Update retail_logs_file_source.properties
+=========================================
+
+# Name for the process
+name=local-file-source
+# The connector
+connector.class=FileStreamSource
+# The no of concurrent message 
+tasks.max=1
+# The file which produces the message
+file=test.txt
+# The topic on which messges have to be produced
+topic=${USER}_retail
+
+
+name=local-file-source
+connector.class=FileStreamSource
+tasks.max=1
+file=/opt/gen_logs/logs/access.log
+topic=${USER}_retail

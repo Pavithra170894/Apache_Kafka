@@ -1,0 +1,9 @@
+Consume retail logs from kafka topic
+====================================
+
+/opt/kafka/bin/kafka-console-consumer.sh \
+--bootstrap-server w01.itversity.com:9092, w02.itversity.com:9092 \
+--topic `whoami`_retail \
+--from-beginning
+
+--from-beginning will take care of consuming messages from the first message that is available

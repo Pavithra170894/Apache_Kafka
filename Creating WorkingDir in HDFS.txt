@@ -1,0 +1,15 @@
+Creating Working directory in HDFS
+==================================
+
+%%sh
+hdfs dfs -ls /user/${USER}/
+
+%%sh
+hdfs dfs -rm -R -skipTrash /user/${USER}/itv-github/streaming
+
+%%sh
+hdfs dfs -mkdir -p /user/${USER}/itv-github/streaming
+
+Found 1 items
+drwxr-xr-x   - itv005372 supergroup          0 2023-02-26 18:25 /user/itv005372/itv-github/streaming
+

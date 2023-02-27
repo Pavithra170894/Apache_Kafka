@@ -1,0 +1,103 @@
+Creating and Listing Kafka Topics
+
+Kafka binaries are set up in /opt/kafka/bin
+
+-rwxr-xr-x 1 kafka hadoop  1019 Jul 28  2020 zookeeper-shell.sh
+-rwxr-xr-x 1 kafka hadoop  1221 Jul 28  2020 zookeeper-server-stop.sh
+-rwxr-xr-x 1 kafka hadoop  1393 Jul 28  2020 zookeeper-server-start.sh
+-rwxr-xr-x 1 kafka hadoop   867 Jul 28  2020 zookeeper-security-migration.sh
+drwxr-xr-x 2 kafka hadoop  4096 Jul 28  2020 windows
+-rwxr-xr-x 1 kafka hadoop  1714 Jul 28  2020 trogdor.sh
+-rwxr-xr-x 1 kafka hadoop   958 Jul 28  2020 kafka-verifiable-producer.sh
+-rwxr-xr-x 1 kafka hadoop   958 Jul 28  2020 kafka-verifiable-consumer.sh
+-rwxr-xr-x 1 kafka hadoop   863 Jul 28  2020 kafka-topics.sh
+-rwxr-xr-x 1 kafka hadoop   945 Jul 28  2020 kafka-streams-application-reset.sh
+-rwxr-xr-x 1 kafka hadoop  1217 Jul 28  2020 kafka-server-stop.sh
+-rwxr-xr-x 1 kafka hadoop  1376 Jul 28  2020 kafka-server-start.sh
+-rwxr-xr-x 1 kafka hadoop 10074 Jul 28  2020 kafka-run-class.sh
+-rwxr-xr-x 1 kafka hadoop   874 Jul 28  2020 kafka-replica-verification.sh
+-rwxr-xr-x 1 kafka hadoop   874 Jul 28  2020 kafka-reassign-partitions.sh
+-rwxr-xr-x 1 kafka hadoop   959 Jul 28  2020 kafka-producer-perf-test.sh
+-rwxr-xr-x 1 kafka hadoop   886 Jul 28  2020 kafka-preferred-replica-election.sh
+-rwxr-xr-x 1 kafka hadoop   862 Jul 28  2020 kafka-mirror-maker.sh
+-rwxr-xr-x 1 kafka hadoop   863 Jul 28  2020 kafka-log-dirs.sh
+-rwxr-xr-x 1 kafka hadoop   870 Jul 28  2020 kafka-leader-election.sh
+-rwxr-xr-x 1 kafka hadoop   866 Jul 28  2020 kafka-dump-log.sh
+-rwxr-xr-x 1 kafka hadoop   869 Jul 28  2020 kafka-delete-records.sh
+-rwxr-xr-x 1 kafka hadoop   871 Jul 28  2020 kafka-delegation-tokens.sh
+-rwxr-xr-x 1 kafka hadoop   948 Jul 28  2020 kafka-consumer-perf-test.sh
+-rwxr-xr-x 1 kafka hadoop   871 Jul 28  2020 kafka-consumer-groups.sh
+-rwxr-xr-x 1 kafka hadoop   944 Jul 28  2020 kafka-console-producer.sh
+-rwxr-xr-x 1 kafka hadoop   945 Jul 28  2020 kafka-console-consumer.sh
+-rwxr-xr-x 1 kafka hadoop   864 Jul 28  2020 kafka-configs.sh
+-rwxr-xr-x 1 kafka hadoop   873 Jul 28  2020 kafka-broker-api-versions.sh
+-rwxr-xr-x 1 kafka hadoop   861 Jul 28  2020 kafka-acls.sh
+-rwxr-xr-x 1 kafka hadoop  1420 Jul 28  2020 connect-standalone.sh
+-rwxr-xr-x 1 kafka hadoop  1396 Jul 28  2020 connect-mirror-maker.sh
+-rwxr-xr-x 1 kafka hadoop  1423 Jul 28  2020 connect-distributed.sh
+-rwxr-xr-x 1 kafka hadoop  1423 Jul 28  2020 connect-distributed.sh
+
+Here kafka-topics.sh are used for all topic related functionalities.
+
+zookeeper is set up on 3 nodes in itversity
+
+m01.itversity.com:2181
+m02.itversity.com:2181
+m03.itversity.com:2181
+
+Commands:
+=========
+
+List
+====
+%%sh 
+/opt/kafka/bin/kafka-topics.sh --list \
+--zookeeper m01.itversity.com:2181,m02.itversity.com:2181,m03.itversity.com:2181
+
+Delete
+======
+%%sh
+
+/opt/kafka/bin/kafka-topics.sh --delete \
+--zookeeper m01.itversity.com:2181,m02.itversity.com:2181 \
+--topic `whoami`_retail
+
+Create
+======
+
+%%sh
+
+/opt/kafka/bin/kafka-topics.sh --create \
+--zookeeper m01.itversity.com:2181,m02.itversity.com:2181 \
+--replication-factor 2 \
+--partitions 3 \
+--topic `whoami`_retail
+
+In a single node cluster, the replication factor cannot be more than 1
+but partitions can be more than 1
+
+WARNING: Due to limitations in metric names, topics with a period ('.') or underscore ('_') could collide. To avoid issues it is best to use either, but not both.
+Created topic itv005372_retail.
+
+List
+====
+%%sh 
+/opt/kafka/bin/kafka-topics.sh --list \
+--zookeeper m01.itversity.com:2181,m02.itversity.com:2181,m03.itversity.com:2181 \
+--topic `whoami`_retail  
+ 
+itv005372_retail
+
+Describe
+========
+%%sh 
+/opt/kafka/bin/kafka-topics.sh --describe \
+--zookeeper m01.itversity.com:2181,m02.itversity.com:2181,m03.itversity.com:2181 \
+--topic `whoami`_retail  
+
+Topic: itv005372_retail	PartitionCount: 3	ReplicationFactor: 2	Configs: 
+	Topic: itv005372_retail	Partition: 0	Leader: 1	Replicas: 1,2	Isr: 1,2
+	Topic: itv005372_retail	Partition: 1	Leader: 2	Replicas: 2,3	Isr: 2,3
+	Topic: itv005372_retail	Partition: 2	Leader: 3	Replicas: 3,1	Isr: 3,1
+	
+Typically fist one will be leader.

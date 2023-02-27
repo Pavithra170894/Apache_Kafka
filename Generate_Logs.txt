@@ -1,0 +1,60 @@
+Generate Logs
+=============
+
+>^C[itv005372@g01 ~]$ ls -ltr /opt
+total 76
+drwxr-xr-x  2 root       root    4096 Oct 30  2018 rh
+drwxr-xr-x 13 spark      hadoop  4096 Aug 28  2020 spark-3.0.1-bin-hadoop3.2
+drwxr-xr-x 13 spark      hadoop  4096 Sep  8  2020 spark-2.4.7-bin-hadoop2.7
+drwxr-xr-x  4 beamium    beamium 4096 Dec 28  2020 beamium
+drwxr-xr-x  4 noderig    noderig 4096 Dec 28  2020 noderig
+lrwxrwxrwx  1 root       root      17 Dec 29  2020 hadoop -> /opt/hadoop-3.3.0
+lrwxrwxrwx  1 root       root      30 Dec 29  2020 spark3-client -> /opt/spark-3.0.1-bin-hadoop3.2
+lrwxrwxrwx  1 root       root      30 Dec 29  2020 spark2-client -> /opt/spark-2.4.7-bin-hadoop2.7
+drwxr-xr-x 10 hive       hadoop  4096 Dec 29  2020 apache-hive-3.1.2-bin
+lrwxrwxrwx  1 root       root      26 Dec 29  2020 hive -> /opt/apache-hive-3.1.2-bin
+drwxr-xr-x  6 zookeeper  hadoop  4096 Dec 29  2020 apache-zookeeper-3.6.1-bin
+lrwxrwxrwx  1 root       root      31 Dec 29  2020 zookeeper -> /opt/apache-zookeeper-3.6.1-bin
+lrwxrwxrwx  1 root       root      21 Dec 29  2020 kafka -> /opt/kafka_2.12-2.6.0
+drwxr-xr-x  3 prometheus hadoop  4096 Dec 29  2020 jmx_exporter
+lrwxrwxrwx  1 root       root      41 Jan  5  2021 postgres_exporter -> /opt/postgres_exporter_v0.8.0_linux-amd64
+drwxrwxr-x  2 prometheus hadoop  4096 Jan  7  2021 postgres_exporter_v0.8.0_linux-amd64
+lrwxrwxrwx  1 root       root      34 Feb 28  2021 sqoop -> /opt/sqoop-1.4.7.bin__hadoop-2.6.0
+drwxr-xr-x  9 sqoop      hadoop  4096 Feb 28  2021 sqoop-1.4.7.bin__hadoop-2.6.0
+drwxr-xr-x  7 hbase      hadoop  4096 Mar  1  2021 hbase-2.3.4
+lrwxrwxrwx  1 root       root      16 Mar  1  2021 hbase -> /opt/hbase-2.3.4
+drwxr-xr-x 10 hdfs       hadoop  4096 Mar 11  2021 hadoop-3.3.0
+drwxr-xr-x  7 flume      hadoop  4096 Mar 30  2021 apache-flume-1.9.0-bin
+lrwxrwxrwx  1 root       root      27 Mar 30  2021 flume -> /opt/apache-flume-1.9.0-bin
+drwxr-xr-x 15 hue        hadoop  4096 Apr 21  2021 hue-4.9.0_b1.0
+drwxr-xr-x  7 kafka      hadoop  4096 Apr 26  2021 kafka_2.12-2.6.0
+drwxr-xr-x  3 root       root    4096 Apr 28  2021 google
+drwxr-xr-x  4 root       root    4096 Apr 28  2021 sublime_text
+lrwxrwxrwx  1 root       root      19 May  5  2021 hue -> /opt/hue-4.9.0_b1.0
+drwxr-xr-x 27 root       root    4096 Jun 13  2021 anaconda3
+drwxrwxr-x  5 centos     root    4096 Jan  8  2022 gen_logs
+[itv005372@g01 ~]$ 
+
+
+[itv005372@g01 ~]$ ls -ltr /opt/gen_logs/
+total 32
+-rwxrwxr-x 1 centos root    51 Mar 12  2021 tail_logs.sh
+-rwxrwx--- 1 centos root   131 Mar 12  2021 stop_logs.sh
+-rwxrwx--- 1 centos root    76 Mar 12  2021 start_logs.sh
+drwxrwxr-x 2 centos root  4096 Mar 12  2021 lib
+drwxrwxr-x 2 centos root  4096 Mar 12  2021 data
+drwxrwxr-x 2 centos root 12288 Feb 24 03:25 logs
+
+start_logs.sh produces web server log messages in the streaming fassion and saves under access.log
+==================================================================================================
+
+
+[itv005372@g01 logs]$ pwd
+/opt/gen_logs/logs
+[itv005372@g01 logs]$ ls -ltr
+total 44928
+-rw-r--r-- 1 root root    19498 Feb 23 06:42 access.log.2.gz
+-rw-r--r-- 1 root root      527 Feb 23 06:42 access.log.1.gz
+-rw-r--r-- 1 root root  1171134 Feb 24 03:25 access.log-20230224.gz
+-rw-r--r-- 1 root root 44805418 Feb 26 18:19 access.log
+[itv005372@g01 logs]$ 

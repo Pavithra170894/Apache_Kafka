@@ -1,0 +1,44 @@
+Validate Kafka Connect to produce messages
+==========================================
+
+To check if no message is written to topic at the beginning
+
+/opt/kafka/bin/kafka-console-consumer.sh \
+--bootstrap-server w01.itversity.com:9092,w02.itversity.com:9092 \
+--topic `whoami`_retail
+
+Will not show any messages in to screen
+
+[itv005372@g01 retail_logs_produce]$ ls -ltr
+total 8
+-rwxr-xr-x 1 itv005372 students 389 Feb 26 18:54 retail_logs_standalone.properties
+-rwxr-xr-x 1 itv005372 students 123 Feb 26 19:00 retail_logs_file_source.properties
+[itv005372@g01 retail_logs_produce]$ cat retail_logs_standalone.properties
+bootstrap.servers=w01.itversity.com:9092,w02.itversity.com:9092
+
+key.converter=org.apache.kafka.connect.storage.StringConverter
+value.converter=org.apache.kafka.connect.storage.StringConverter
+
+key.converter.schemas.enable=true
+value.converter.schemas.enable=true
+
+offset.storage.file.filename=/home/itv005372/kafka_connect/retail_logs_produce/retail.offsets
+offset.flush.interval.ms=10000[itv005372@g01 retail_logs_produce]
+
+$ cat retail_logs_file_source.properties
+name=local-file-source
+connector.class=FileStreamSource
+tasks.max=1
+file=/opt/gen_logs/logs/access.log
+topic=${USER}_retail[itv005372@g01 retail_logs_produce]
+
+Start the kafka.connect
+=======================
+
+/opt/kafka/bin/connect-standalone.sh \
+retail_logs_standalone.properties \
+retail_logs_file_source.properties
+
+/opt/kafka/bin/kafka-console-consumer.sh \
+--bootstrap-server w01.itversity.com:9092,w02.itversity.com:9092 \
+--topic `whoami`_retail
